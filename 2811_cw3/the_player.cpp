@@ -18,6 +18,8 @@ void ThePlayer::shuffle() {
     TheButtonInfo* i = & infos -> at (rand() % infos->size() );
 //        setMedia(*i->url);
     buttons -> at( updateCount++ % buttons->size() ) -> init( i );
+
+    qDebug() << updateCount - 1 << " : " << *(i->url);
 }
 
 void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
@@ -33,4 +35,9 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
 void ThePlayer::jumpTo (TheButtonInfo* button) {
     setMedia( * button -> url);
     play();
+}
+
+void ThePlayer::newContent(TheButtonInfo i){
+    infos->push_back(i);
+    jumpTo(&i);//set newest video to also be one playing
 }

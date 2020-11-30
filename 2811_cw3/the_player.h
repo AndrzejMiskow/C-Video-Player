@@ -37,6 +37,7 @@ public:
 
     // all buttons have been setup, store pointers here
     void setContent(vector<TheButton*>* b, vector<TheButtonInfo>* i);
+    void newContent(TheButtonInfo i);//add a new video to the rotation without having to reload all previous ones
 
 private slots:
 

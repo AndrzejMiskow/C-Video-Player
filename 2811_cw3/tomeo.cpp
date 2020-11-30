@@ -28,6 +28,9 @@
 #include "the_player.h"
 #include "the_button.h"
 
+#include "new_video_button.h"
+#include <QString>
+
 
 using namespace std;
 
@@ -141,6 +144,7 @@ int main(int argc, char *argv[]) {
     window.setMinimumSize(800, 680);
 
     // add the video and the buttons to the top level widget
+    top->addWidget(new NewVideoButton(argv[1], player));
     top->addWidget(videoWidget);
     top->addWidget(buttonWidget);
 

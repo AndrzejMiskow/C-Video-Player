@@ -10,11 +10,13 @@ CONFIG += c++11
 #Andrzej - I can edit the repository
 
 SOURCES += \
+        new_video_button.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp
 
 HEADERS += \
+    new_video_button.h \
     the_button.h \
     the_player.h
 
