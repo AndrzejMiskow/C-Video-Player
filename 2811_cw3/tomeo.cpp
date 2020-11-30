@@ -27,6 +27,7 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include "control_bar.h"
 
 
 using namespace std;

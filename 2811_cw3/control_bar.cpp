@@ -6,7 +6,7 @@
 #include <QToolButton>
 #include <QComboBox>
 
-control_bar::control_bar(QWidget *parent) : QWidget(parent)
+ControlBar::ControlBar(QWidget *parent) : QWidget(parent)
 {
     playButton = new QToolButton(this);
     playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -37,32 +37,32 @@ control_bar::control_bar(QWidget *parent) : QWidget(parent)
     setLayout(layout);
 }
 
-QMediaPlayer::State control_bar::state()
+QMediaPlayer::State ControlBar::state()
 {
     return playerState;
 }
 
-int control_bar::volume()
+int ControlBar::volume()
 {
     return volumeSlider->value();
 }
 
-bool control_bar::isMuted()
+bool ControlBar::isMuted()
 {
     return playerMuted;
 }
 
-float control_bar::playbackSpeed()
+float ControlBar::playbackSpeed()
 {
     return speedBox->itemData(speedBox->currentIndex()).toFloat();
 }
 
-void control_bar::setVolume(int volume)
+void ControlBar::setVolume(int volume)
 {
    volumeSlider->setValue(volume);
 }
 
-void control_bar::setMute(bool muted)
+void ControlBar::setMute(bool muted)
 {
     playerMuted = muted;
 
@@ -72,7 +72,7 @@ void control_bar::setMute(bool muted)
         muteButton->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
 }
 
-void control_bar::setState(QMediaPlayer::State state)
+void ControlBar::setState(QMediaPlayer::State state)
 {
     if (state != playerState) {
         playerState = state;
@@ -89,7 +89,7 @@ void control_bar::setState(QMediaPlayer::State state)
     }
 }
 
-void control_bar::setSpeed(float speed)
+void ControlBar::setSpeed(float speed)
 {
     for (int i=0; i< speedBox->count(); i++) {
         if (speed == speedBox->itemData(i).toDouble()) {
@@ -99,7 +99,7 @@ void control_bar::setSpeed(float speed)
     }
 }
 
-void control_bar::playClicked()
+void ControlBar::playClicked()
 {
     switch(playerState) {
     case QMediaPlayer::PlayingState:
@@ -112,12 +112,12 @@ void control_bar::playClicked()
     }
 }
 
-void control_bar::updateSpeed()
+void ControlBar::updateSpeed()
 {
     emit changeSpeed(playbackSpeed());
 }
 
-void control_bar::muteClicked()
+void ControlBar::muteClicked()
 {
     emit muteUnmute(!playerMuted);
 }

@@ -7,11 +7,11 @@
 #include <QAbstractSlider>
 #include <QComboBox>
 
-class control_bar : public QWidget
+class ControlBar : public QWidget
 {
     Q_OBJECT
 public:
-    control_bar(QWidget *parent);
+    ControlBar(QWidget *parent);
     QMediaPlayer::State state();
     int volume();
     bool isMuted();
