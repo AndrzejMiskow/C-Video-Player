@@ -9,16 +9,15 @@ class FullscreenButton : public QPushButton
     Q_OBJECT
 private:
     QWidget* parentWindow;
-    bool fullscreen;
 
 public:
     FullscreenButton(QWidget* window) : QPushButton(tr("Fullscreen")){
         parentWindow = window;
-        connect(this, SIGNAL(clicked()), this, SLOT(switchScreenState()));
+        connect(this, SIGNAL(clicked()), this, SLOT(switchScreenState()));//set button to switchstates when clicked
     }
 
 private slots:
-    void switchScreenState();
+    void switchScreenState();//template for switchstate slot/function
 };
 
 #endif // FULLSCREEN_BUTTON_H
