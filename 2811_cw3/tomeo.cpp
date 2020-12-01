@@ -27,6 +27,7 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include "mainwindow.h"
 
 
 using namespace std;
@@ -134,7 +135,9 @@ int main(int argc, char *argv[]) {
     player->setContent(&buttons, & videos);
 
     // create the main window and layout
-    QWidget window;
+    MainWindow w(player);
+    QWidget& window = *w.centralWidget();
+
     QVBoxLayout *top = new QVBoxLayout();
     window.setLayout(top);
     window.setWindowTitle("tomeo");
@@ -142,10 +145,11 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
+    top->addWidget(w.slider);
     top->addWidget(buttonWidget);
 
     // showtime!
-    window.show();
+    w.show();
 
     // wait for the app to terminate
     return app.exec();
