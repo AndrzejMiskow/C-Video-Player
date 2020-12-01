@@ -18,8 +18,6 @@ void ThePlayer::shuffle() {
     TheButtonInfo* i = & infos -> at (rand() % infos->size() );
 //        setMedia(*i->url);
     buttons -> at( updateCount++ % buttons->size() ) -> init( i );
-
-    qDebug() << updateCount - 1 << " : " << *(i->url);
 }
 
 void ThePlayer::playStateChanged (QMediaPlayer::State ms) {

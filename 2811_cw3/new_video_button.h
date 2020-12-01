@@ -39,6 +39,7 @@ public:
         file->setFileMode(QFileDialog::ExistingFile);//only allows the selection of a single, existing file
         file->setNameFilter(tr("Videos (*.wmv)"));//only allow wmv files, originally allowed mp4 but qt does not have supporting codec
         file->setViewMode(QFileDialog::List);//do not show unnecesary details
+        file->setDirectory(video_directory);
 
         player = new QMediaPlayer();
         player->setVolume(0);//prevent user from hearing videos being processed
