@@ -94,7 +94,6 @@ int main(int argc, char *argv[]) {
                     QString("no videos found! download, unzip, and add command line argument to \"quoted\" file location. Download videos from Tom's OneDrive?"),
                     QMessageBox::Yes |
                     QMessageBox::No );
-
         switch( result )
         {
         case QMessageBox::Yes:
@@ -112,6 +111,11 @@ int main(int argc, char *argv[]) {
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
+
+    ControlBar *controls = new ControlBar(0,player);
+    controls->setMute(controls->isMuted());
+    controls->setState(player->state());
+    controls->setVolume(player->volume());
 
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
@@ -143,6 +147,7 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
+    top->addWidget(controls);
     top->addWidget(buttonWidget);
 
     // showtime!

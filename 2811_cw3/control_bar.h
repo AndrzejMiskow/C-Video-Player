@@ -11,11 +11,11 @@ class ControlBar : public QWidget
 {
     Q_OBJECT
 public:
-    ControlBar(QWidget *parent);
+    ControlBar(QWidget *parent = 0, QMediaPlayer *player = 0);
     QMediaPlayer::State state();
     int volume();
     bool isMuted();
-    float playbackSpeed();
+    qreal playbackSpeed();
 
 private:
     QMediaPlayer::State playerState;
@@ -24,13 +24,14 @@ private:
     QAbstractButton *muteButton;
     QAbstractSlider *volumeSlider;
     QComboBox *speedBox;
+    void makeConnections(QMediaPlayer);
 
 signals:
     void play();
     void pause();
     void changeVolume(int volume);
     void muteUnmute(bool mute);
-    void changeSpeed(float speed);
+    void changeSpeed(qreal speed);
 
 public slots:
     void setState(QMediaPlayer::State state);

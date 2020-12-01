@@ -5,8 +5,9 @@
 #include <QStyle>
 #include <QToolButton>
 #include <QComboBox>
+#include <QMediaPlayer>
 
-ControlBar::ControlBar(QWidget *parent) : QWidget(parent)
+ControlBar::ControlBar(QWidget *parent, QMediaPlayer *player) : QWidget(parent)
 {
     playButton = new QToolButton(this);
     playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -28,6 +29,15 @@ ControlBar::ControlBar(QWidget *parent) : QWidget(parent)
     connect(muteButton, SIGNAL(clicked()), this, SLOT(muteClicked()));
     connect(volumeSlider, SIGNAL(sliderMoved(int)), this, SIGNAL(changeVolume(int)));
     connect(speedBox, SIGNAL(activated(int)), this, SLOT(updateSpeed()));
+
+    connect(this, SIGNAL(play()), player, SLOT(play()));
+    connect(this, SIGNAL(pause()), player, SLOT(pause()));
+    connect(this, SIGNAL(changeVolume(int)), player, SLOT(setVolume(int)));
+    connect(this, SIGNAL(muteUnmute(bool)), player, SLOT(setMuted(bool)));
+    connect(this, SIGNAL(changeSpeed(qreal)), player, SLOT(setPlaybackRate(qreal)));
+    connect(player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(setState(QMediaPlayer::State)));
+    connect(player, SIGNAL(volumeChanged(int)), this, SLOT(setVolume(int)));
+    connect(player, SIGNAL(mutedChanged(bool)), this, SLOT(setMute(bool)));
 
     QBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(playButton);
@@ -52,9 +62,9 @@ bool ControlBar::isMuted()
     return playerMuted;
 }
 
-float ControlBar::playbackSpeed()
+qreal ControlBar::playbackSpeed()
 {
-    return speedBox->itemData(speedBox->currentIndex()).toFloat();
+    return speedBox->itemData(speedBox->currentIndex()).toDouble();
 }
 
 void ControlBar::setVolume(int volume)
