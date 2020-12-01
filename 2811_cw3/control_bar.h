@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
-#include <QAbstractButton>
-#include <QAbstractSlider>
+#include <QToolButton>
+#include <QSlider>
 #include <QComboBox>
 
 class ControlBar : public QWidget
@@ -12,6 +12,7 @@ class ControlBar : public QWidget
     Q_OBJECT
 public:
     ControlBar(QWidget *parent = 0, QMediaPlayer *player = 0);
+    //Getters
     QMediaPlayer::State state();
     int volume();
     bool isMuted();
@@ -20,13 +21,14 @@ public:
 private:
     QMediaPlayer::State playerState;
     bool playerMuted;
-    QAbstractButton *playButton;
-    QAbstractButton *muteButton;
-    QAbstractSlider *volumeSlider;
+    //Buttons, combobox and slider to adjust settings
+    QToolButton *playButton;
+    QToolButton *muteButton;
+    QSlider *volumeSlider;
     QComboBox *speedBox;
-    void makeConnections(QMediaPlayer);
 
 signals:
+    //Self explanatory signals
     void play();
     void pause();
     void changeVolume(int volume);
@@ -34,12 +36,14 @@ signals:
     void changeSpeed(qreal speed);
 
 public slots:
+    //Slots to update the values of the sliders,buttons, etc
     void setState(QMediaPlayer::State state);
     void setVolume(int volume);
     void setMute(bool mute);
     void setSpeed(float rate);
 
 private slots:
+    //Private slots to react to interactions with the buttons etc
     void playClicked();
     void muteClicked();
     void updateSpeed();

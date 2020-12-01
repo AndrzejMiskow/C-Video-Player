@@ -112,6 +112,7 @@ int main(int argc, char *argv[]) {
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
+    // the ControlBar used to control playback settings
     ControlBar *controls = new ControlBar(0,player);
     controls->setMute(controls->isMuted());
     controls->setState(player->state());
