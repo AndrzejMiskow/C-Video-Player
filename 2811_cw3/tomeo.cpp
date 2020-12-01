@@ -27,6 +27,7 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include "control_bar.h"
 
 
 using namespace std;
@@ -93,7 +94,6 @@ int main(int argc, char *argv[]) {
                     QString("no videos found! download, unzip, and add command line argument to \"quoted\" file location. Download videos from Tom's OneDrive?"),
                     QMessageBox::Yes |
                     QMessageBox::No );
-
         switch( result )
         {
         case QMessageBox::Yes:
@@ -112,6 +112,16 @@ int main(int argc, char *argv[]) {
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
+    // the ControlBar used to control playback settings
+    ControlBar *controls = new ControlBar(0,player);
+    controls->setMute(controls->isMuted());
+    controls->setState(player->state());
+    controls->setVolume(player->volume());
+
+    //Widget for playback controls (likely to be expanded beyond what's here now) ****remember to edit this coment****
+    QHBoxLayout *playbackLayout = new QHBoxLayout();
+    playbackLayout->addWidget(controls);
+
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
@@ -120,6 +130,10 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
 
+    //Create a layout for the buttons and playback controls
+    QVBoxLayout *controlLayout = new QVBoxLayout();
+    controlLayout->addLayout(playbackLayout);
+    controlLayout->addWidget(buttonWidget);
 
     // create the four buttons
     for ( int i = 0; i < 4; i++ ) {
@@ -142,7 +156,7 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
-    top->addWidget(buttonWidget);
+    top->addLayout(controlLayout);
 
     // showtime!
     window.show();
