@@ -28,9 +28,11 @@
 #include "the_player.h"
 #include "the_button.h"
 #include <QTabWidget>
+#include <QScrollArea>
 
 
 using namespace std;
+int vid_number = 0;
 
 // read in videos and thumbnails to this directory
 vector<TheButtonInfo> getInfoIn (string loc) {
@@ -113,6 +115,8 @@ int main(int argc, char *argv[]) {
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
+    QScrollArea *scroll = new QScrollArea;
+
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
@@ -121,9 +125,14 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
 
+    //scroll area for the
+    scroll->setWidget(buttonWidget);
+    scroll->setWidgetResizable(true);
+    scroll->setMinimumHeight(160);
 
-    // create the four buttons
-    for ( int i = 0; i < 4; i++ ) {
+
+    // create the buttons for the number of videos in the folder
+    for ( int i = 0; i < (int)videos.size(); i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
@@ -138,18 +147,16 @@ int main(int argc, char *argv[]) {
     QWidget *window = new QWidget();
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
-    QWidget *test = new QWidget();
 
     window->setLayout(top);
     window->setWindowTitle("tomeo");
     window->setMinimumSize(800, 680);
 
-
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
-    top->addWidget(buttonWidget);
+    top->addWidget(scroll);
 
-
+    //navigation tabs in the program
     tabs->addTab(window,"Video Player");
     tabs->addTab(new QWidget(),"Gallery");
 
