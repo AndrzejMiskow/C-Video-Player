@@ -31,6 +31,7 @@
 
 #include "new_video_button.h"
 #include <QString>
+#include "fullscreen_button.h"
 
 
 using namespace std;
@@ -136,7 +137,7 @@ int main(int argc, char *argv[]) {
     //Create a layout for the buttons and playback controls
     QVBoxLayout *controlLayout = new QVBoxLayout();
     controlLayout->addLayout(playbackLayout);
-    controlLayout->addWidget(buttonWidget);
+//    controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
 
     // create the four buttons
     for ( int i = 0; i < 4; i++ ) {
@@ -157,10 +158,18 @@ int main(int argc, char *argv[]) {
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
 
+    QWidget fullScreenHolder;
+    QVBoxLayout *fsh = new QVBoxLayout();
+    fullScreenHolder.setLayout(fsh);
+    fsh->setMargin(0);
+
     // add the video and the buttons to the top level widget
     top->addWidget(new NewVideoButton(argv[1], player));
-    top->addWidget(videoWidget);
-    top->addLayout(controlLayout);
+    top->addWidget(&fullScreenHolder);
+    fsh->addWidget(new FullscreenButton(&fullScreenHolder));
+    fsh->addWidget(videoWidget);
+    fsh->addLayout(controlLayout);
+    top->addWidget(buttonWidget);
 
     // showtime!
     window.show();

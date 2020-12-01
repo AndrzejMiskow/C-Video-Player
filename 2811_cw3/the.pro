@@ -9,6 +9,7 @@ CONFIG += c++11
 
 SOURCES += \
         control_bar.cpp \
+        fullscreen_button.cpp \
         new_video_button.cpp \
         the_button.cpp \
         the_player.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
 
 HEADERS += \
     control_bar.h \
+    fullscreen_button.h \
     new_video_button.h \
     the_button.h \
     the_player.h
