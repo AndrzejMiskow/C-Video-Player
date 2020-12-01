@@ -24,6 +24,7 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
     switch (ms) {
         case QMediaPlayer::State::StoppedState:
             play(); // starting playing again...
+            emit(stateChanged(this->state())); //emit a signal so the play/pause button knows
             break;
     default:
         break;
@@ -33,4 +34,5 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
 void ThePlayer::jumpTo (TheButtonInfo* button) {
     setMedia( * button -> url);
     play();
+    emit(stateChanged(this->state()));
 }

@@ -118,6 +118,10 @@ int main(int argc, char *argv[]) {
     controls->setState(player->state());
     controls->setVolume(player->volume());
 
+    //Widget for playback controls (likely to be expanded beyond what's here now) ****remember to edit this coment****
+    QHBoxLayout *playbackLayout = new QHBoxLayout();
+    playbackLayout->addWidget(controls);
+
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
@@ -126,6 +130,10 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
 
+    //Create a layout for the buttons and playback controls
+    QVBoxLayout *controlLayout = new QVBoxLayout();
+    controlLayout->addLayout(playbackLayout);
+    controlLayout->addWidget(buttonWidget);
 
     // create the four buttons
     for ( int i = 0; i < 4; i++ ) {
@@ -148,8 +156,7 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
-    top->addWidget(controls);
-    top->addWidget(buttonWidget);
+    top->addLayout(controlLayout);
 
     // showtime!
     window.show();

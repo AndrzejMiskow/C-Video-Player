@@ -21,12 +21,12 @@ ControlBar::ControlBar(QWidget *parent, QMediaPlayer *player) : QWidget(parent)
     volumeSlider->setRange(0, 100);
 
     //Create a spinbox with various speed options
-    //QVariant is used as playback speed is QReal, but we also need to use double
+    //The "playbackrate" is a qreal
     speedBox = new QComboBox(this);
-    speedBox->addItem("0.5x", QVariant(0.5));
-    speedBox->addItem("1.0x", QVariant(1.0));
-    speedBox->addItem("1.5x", QVariant(1.5));
-    speedBox->addItem("2.0x", QVariant(2.0));
+    speedBox->addItem("0.5x", qreal(0.5));
+    speedBox->addItem("1.0x", qreal(1.0));
+    speedBox->addItem("1.5x", qreal(1.5));
+    speedBox->addItem("2.0x", qreal(2.0));
     speedBox->setCurrentIndex(1);
 
     //Connect internal signals and slots - generally updating displayed values
