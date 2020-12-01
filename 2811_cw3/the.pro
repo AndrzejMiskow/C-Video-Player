@@ -9,12 +9,14 @@ CONFIG += c++11
 
 SOURCES += \
         control_bar.cpp \
+        new_video_button.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp
 
 HEADERS += \
     control_bar.h \
+    new_video_button.h \
     the_button.h \
     the_player.h
 
