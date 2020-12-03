@@ -3,16 +3,19 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QTabWidget>
 
 class FullscreenButton : public QPushButton
 {
     Q_OBJECT
 private:
     QWidget* parentWindow;
+    QTabWidget* tabWidget;
 
 public:
-    FullscreenButton(QWidget* window) : QPushButton(tr("Fullscreen")){
+    FullscreenButton(QWidget* window, QTabWidget* tabContainer) : QPushButton(tr("Fullscreen")){
         parentWindow = window;
+        tabWidget = tabContainer;
         connect(this, SIGNAL(clicked()), this, SLOT(switchScreenState()));//set button to switchstates when clicked
     }
 
