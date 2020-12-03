@@ -94,16 +94,18 @@ void ControlBar::setMute(bool muted)
 
 void ControlBar::setState(QMediaPlayer::State state)
 {
+    if (state == QMediaPlayer::State::StoppedState) //Ignore stopped state as content is always looping
+        return;
     if (state != playerState) {
         playerState = state;
 
         //Decide button icon based on current state
         switch (state) {
         case QMediaPlayer::PlayingState:
+        case QMediaPlayer::StoppedState:
             playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
             break;
         case QMediaPlayer::PausedState:
-        case QMediaPlayer::StoppedState:
             playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
             break;
         }
