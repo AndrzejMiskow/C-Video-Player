@@ -7,14 +7,18 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-#Andrzej - I can edit the repository
-
 SOURCES += \
+        control_bar.cpp \
+        fullscreen_button.cpp \
+        new_video_button.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp
 
 HEADERS += \
+    control_bar.h \
+    fullscreen_button.h \
+    new_video_button.h \
     the_button.h \
     the_player.h
 

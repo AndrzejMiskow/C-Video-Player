@@ -29,6 +29,11 @@
 #include "the_button.h"
 #include <QTabWidget>
 #include <QScrollArea>
+#include "control_bar.h"
+
+#include "new_video_button.h"
+#include <QString>
+#include "fullscreen_button.h"
 
 
 using namespace std;
@@ -96,7 +101,6 @@ int main(int argc, char *argv[]) {
                     QString("no videos found! download, unzip, and add command line argument to \"quoted\" file location. Download videos from Tom's OneDrive?"),
                     QMessageBox::Yes |
                     QMessageBox::No );
-
         switch( result )
         {
         case QMessageBox::Yes:
@@ -116,6 +120,15 @@ int main(int argc, char *argv[]) {
     player->setVideoOutput(videoWidget);
 
     QScrollArea *scroll = new QScrollArea;
+    // the ControlBar used to control playback settings
+    ControlBar *controls = new ControlBar(0,player);
+    controls->setMute(controls->isMuted());
+    controls->setState(player->state());
+    controls->setVolume(player->volume());
+
+    //Widget for playback controls (likely to be expanded beyond what's here now) ****remember to edit this coment****
+    QHBoxLayout *playbackLayout = new QHBoxLayout();
+    playbackLayout->addWidget(controls);
 
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
@@ -130,6 +143,10 @@ int main(int argc, char *argv[]) {
     scroll->setWidgetResizable(true);
     scroll->setMinimumHeight(160);
 
+    //Create a layout for the buttons and playback controls
+    QVBoxLayout *controlLayout = new QVBoxLayout();
+    controlLayout->addLayout(playbackLayout);
+//    controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
 
     // create the buttons for the number of videos in the folder
     for ( int i = 0; i < (int)videos.size(); i++ ) {
@@ -152,6 +169,11 @@ int main(int argc, char *argv[]) {
     window->setWindowTitle("tomeo");
     window->setMinimumSize(800, 680);
 
+    QWidget fullScreenHolder;
+    QVBoxLayout *fsh = new QVBoxLayout();
+    fullScreenHolder.setLayout(fsh);
+    fsh->setMargin(0);
+
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
     top->addWidget(scroll);
@@ -159,6 +181,13 @@ int main(int argc, char *argv[]) {
     //navigation tabs in the program
     tabs->addTab(window,"Video Player");
     tabs->addTab(new QWidget(),"Gallery");
+
+    top->addWidget(new NewVideoButton(argv[1], player));
+    top->addWidget(&fullScreenHolder);
+    fsh->addWidget(new FullscreenButton(&fullScreenHolder));
+    fsh->addWidget(videoWidget);
+    fsh->addLayout(controlLayout);
+    top->addWidget(buttonWidget);
 
     // showtime!
     tabs->show();
