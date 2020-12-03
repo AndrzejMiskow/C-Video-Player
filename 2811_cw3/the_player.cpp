@@ -40,4 +40,5 @@ void ThePlayer::jumpTo (TheButtonInfo* button) {
 void ThePlayer::newContent(TheButtonInfo i){
     infos->push_back(i);
     jumpTo(&i);//set newest video to also be one playing
+    emit(stateChanged(this->state()));
 }
