@@ -27,6 +27,8 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include <QTabWidget>
+#include <QScrollArea>
 #include "control_bar.h"
 
 #include "new_video_button.h"
@@ -35,6 +37,7 @@
 
 
 using namespace std;
+int vid_number = 0;
 
 // read in videos and thumbnails to this directory
 vector<TheButtonInfo> getInfoIn (string loc) {
@@ -116,6 +119,7 @@ int main(int argc, char *argv[]) {
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
+    QScrollArea *scroll = new QScrollArea;
     // the ControlBar used to control playback settings
     ControlBar *controls = new ControlBar(0,player);
     controls->setMute(controls->isMuted());
@@ -134,13 +138,18 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
 
+    //scroll area for the
+    scroll->setWidget(buttonWidget);
+    scroll->setWidgetResizable(true);
+    scroll->setMinimumHeight(160);
+
     //Create a layout for the buttons and playback controls
     QVBoxLayout *controlLayout = new QVBoxLayout();
     controlLayout->addLayout(playbackLayout);
 //    controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
 
-    // create the four buttons
-    for ( int i = 0; i < 4; i++ ) {
+    // create the buttons for the number of videos in the folder
+    for ( int i = 0; i < (int)videos.size(); i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
@@ -152,11 +161,13 @@ int main(int argc, char *argv[]) {
     player->setContent(&buttons, & videos);
 
     // create the main window and layout
-    QWidget window;
+    QWidget *window = new QWidget();
     QVBoxLayout *top = new QVBoxLayout();
-    window.setLayout(top);
-    window.setWindowTitle("tomeo");
-    window.setMinimumSize(800, 680);
+    QTabWidget *tabs = new QTabWidget();
+
+    window->setLayout(top);
+    window->setWindowTitle("tomeo");
+    window->setMinimumSize(800, 680);
 
     QWidget fullScreenHolder;
     QVBoxLayout *fsh = new QVBoxLayout();
@@ -164,6 +175,13 @@ int main(int argc, char *argv[]) {
     fsh->setMargin(0);
 
     // add the video and the buttons to the top level widget
+    top->addWidget(videoWidget);
+    top->addWidget(scroll);
+
+    //navigation tabs in the program
+    tabs->addTab(window,"Video Player");
+    tabs->addTab(new QWidget(),"Gallery");
+
     top->addWidget(new NewVideoButton(argv[1], player));
     top->addWidget(&fullScreenHolder);
     fsh->addWidget(new FullscreenButton(&fullScreenHolder));
@@ -172,8 +190,10 @@ int main(int argc, char *argv[]) {
     top->addWidget(buttonWidget);
 
     // showtime!
-    window.show();
+    tabs->show();
 
     // wait for the app to terminate
     return app.exec();
 }
+
+
