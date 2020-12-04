@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QTabWidget>
+#include <map>
 
 class FullscreenButton : public QPushButton
 {
@@ -11,7 +12,10 @@ class FullscreenButton : public QPushButton
 private:
     QWidget* parentWindow;
     QTabWidget* tabWidget;
+    std::map<QWidget*, bool> previousState;
 
+    void hideHierarchy(QWidget*, QWidget*);
+    void showHierarchy(QWidget*, QWidget*);
 public:
     FullscreenButton(QWidget* window, QTabWidget* tabContainer) : QPushButton(tr("Fullscreen")){
         parentWindow = window;
