@@ -34,6 +34,7 @@
 #include "new_video_button.h"
 #include <QString>
 #include "fullscreen_button.h"
+#include "gallery_widget.h"
 
 
 using namespace std;
@@ -169,18 +170,19 @@ int main(int argc, char *argv[]) {
     window->setWindowTitle("tomeo");
     window->setMinimumSize(800, 680);
 
+    //Code for fullscreen button, widgets in layout fsh will be made fullscreen
     QWidget fullScreenHolder;
     QVBoxLayout *fsh = new QVBoxLayout();
     fullScreenHolder.setLayout(fsh);
     fsh->setMargin(0);
 
     // add the video and the buttons to the top level widget
-    top->addWidget(videoWidget);
+    //top->addWidget(videoWidget);//Not sure what this does, commenting it out does not appear to affect the program, and it should be redundant because of line 189.EDIT: qobjects can only exist in one place at once, so this command is replaced almost instantly by line 189.
     top->addWidget(scroll);
 
     //navigation tabs in the program
     tabs->addTab(window,"Video Player");
-    tabs->addTab(new QWidget(),"Gallery");
+    tabs->addTab(new GalleryWidget(player, argv[1]), "Gallery");
 
     top->addWidget(new NewVideoButton(argv[1], player));
     top->addWidget(&fullScreenHolder);
