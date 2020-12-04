@@ -28,7 +28,7 @@ public:
     GalleryWidget(ThePlayer* player, QString dirAddress);
 
     ~GalleryWidget(){
-        //delete buttonDisplay;
+        delete buttonDisplay;//not strictly necessary, but good practice
     }
 
     void addVid(QString);

@@ -13,17 +13,19 @@ class vid_object
 {
 public:
     QUrl* mediaLocation;
-    QIcon* icon;
+    QIcon* icon;//holds thumbnail of the video this represents
 
     vid_object(QUrl* media, QIcon* png) : mediaLocation(media), icon(png){
         //qDebug() << *mediaLocation << " : " << icon;
     }
+    //for some reason, having a copy constructor in here causes build errors. I cannot find why
 //    vid_object(vid_object &vo){
 //        mediaLocation = vo.mediaLocation;
 //        icon = vo.icon;
 //    }
-    vid_object(){};
-    void copy(vid_object vo){
+    vid_object(){};//empty constructor required for usage in gallery_button.h
+
+    void copy(vid_object vo){//for use as a bootleg copy constructor
         mediaLocation = vo.mediaLocation;
         icon = vo.icon;
     }

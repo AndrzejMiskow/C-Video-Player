@@ -16,12 +16,12 @@ public:
         this->setFixedSize(fixedSize);
         this->setIcon(icon);
         this->setIconSize(iconSize);
-        vo.copy(voc);
+        vo.copy(voc);//placing this in the definition causes errors, I don't know why. Still works here though
     }
 signals:
     void changePlayer(TheButtonInfo*);
 public slots:
-    void createButtonInfo(){
+    void createButtonInfo(){//create a temporary TheButtonInfo in order to pass it to Player
         TheButtonInfo but(vo.mediaLocation, vo.icon);
         emit changePlayer(&but);
     }
