@@ -2,20 +2,28 @@
 #define GALLERY_BUTTON_H
 
 #include <QWidget>
-#include <QPushButton>
+#include <QToolButton>
 #include <QSize>
 #include <QIcon>
 #include "the_button.h"
 #include "vid_object.h"
 
-class GalleryButton : public QPushButton {
+class GalleryButton : public QToolButton {
     Q_OBJECT
 vid_object vo;
 public:
-    GalleryButton(QSize fixedSize, QSize iconSize, QIcon icon, vid_object &voc) : QPushButton() {
-        this->setFixedSize(fixedSize);
-        this->setIcon(icon);
-        this->setIconSize(iconSize);
+    GalleryButton(vid_object &voc) : QToolButton() {
+        //setting the thumbnail in the gallery
+        this->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        this->setIcon(*voc.icon);
+        this->setIconSize(QSize(200, 110));
+
+        //file name taken form the URL of the video
+        QString filename = voc.mediaLocation->fileName();
+        this->setText(filename);
+
+        //settting the size of the gallery buttons
+        this->setMinimumSize(200,110);
         vo.copy(voc);//placing this in the definition causes errors, I don't know why. Still works here though
     }
 signals:

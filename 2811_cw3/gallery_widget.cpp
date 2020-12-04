@@ -6,6 +6,7 @@
 #include <QMetaObject>
 #include <QComboBox>
 #include <QStack>
+#include <QToolButton>
 
 GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() {
     this->player = player;//keep track of which player this gallery is connected to
@@ -88,11 +89,11 @@ void GalleryWidget::replaceButtons(){//this function arranges buttons, currently
         //qDebug() << "within for, " << x << " : " << *v.mediaLocation;
         if(++x > amountPerRow) {hlay->addStretch(); hlay = new QHBoxLayout(); vlay->addLayout(hlay); x=1;}//if this buttons would be more than allowed per row, create a new row and reset the counter
 
-        auto but = new GalleryButton(QSize(200, 110), QSize(200, 110), *v.icon, v);//create a new button
+        auto but = new GalleryButton(v);//create a new button
 
         connect(but, SIGNAL(clicked()), but, SLOT(createButtonInfo()));//create a temporary TheButtonInfo instance to pass to player when clicked
         connect(but, SIGNAL(changePlayer(TheButtonInfo*)), player, SLOT(jumpTo(TheButtonInfo*)));//pass TheButtonInfo instance to player
-        //connect(but, SIGNAL(clicked()), this->parent(), SLOT(setCurrentIndex(int)));//attempt to change tab when button is pressed, does not work
+        //connect(but, SIGNAL(clicked()), , SLOT(setCurrentIndex(0)));//attempt to change tab when button is pressed, does not work
 
         hlay->addWidget(but);
     }
