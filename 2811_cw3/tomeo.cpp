@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
     //Create a layout for the buttons and playback controls
     QVBoxLayout *controlLayout = new QVBoxLayout();
     controlLayout->addLayout(playbackLayout);
-//    controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
+    //controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
 
     // create the buttons for the number of videos in the folder
     for ( int i = 0; i < (int)videos.size(); i++ ) {
@@ -163,19 +163,16 @@ int main(int argc, char *argv[]) {
     player->setContent(&buttons, & videos);
 
     // create the main window and layout
-<<<<<<< HEAD
-    QWidget *window = new QWidget();
-=======
+    //QWidget *window = new QWidget();
     MainWindow w(player);
     QWidget& window = *w.centralWidget();
 
->>>>>>> Toolbar_progressbar
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
-    window->setLayout(top);
-    window->setWindowTitle("tomeo");
-    window->setMinimumSize(800, 680);
+    window.setLayout(top);
+    window.setWindowTitle("tomeo");
+    window.setMinimumSize(800, 680);
 
     QWidget fullScreenHolder;
     QVBoxLayout *fsh = new QVBoxLayout();
@@ -183,12 +180,11 @@ int main(int argc, char *argv[]) {
     fsh->setMargin(0);
 
     // add the video and the buttons to the top level widget
-    top->addWidget(videoWidget);
-<<<<<<< HEAD
+    //top->addWidget(videoWidget);
     top->addWidget(scroll);
 
     //navigation tabs in the program
-    tabs->addTab(window,"Video Player");
+    tabs->addTab(&window,"Video Player");
     tabs->addTab(new QWidget(),"Gallery");
 
     top->addWidget(new NewVideoButton(argv[1], player));
@@ -197,13 +193,14 @@ int main(int argc, char *argv[]) {
     fsh->addWidget(videoWidget);
     fsh->addLayout(controlLayout);
     fsh->addWidget(w.slider);
-    fsh->addWidget(buttonWidget);
+
     top->addWidget(buttonWidget);
+
+    fsh->addWidget(w.slider);
 
     // showtime!
     tabs->show();
-    top->addWidget(w.slider);
-    top->addWidget(buttonWidget);
+
 
     // wait for the app to terminate
     return app.exec();
