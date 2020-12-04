@@ -35,6 +35,8 @@
 #include <QString>
 #include "fullscreen_button.h"
 
+#include "mainwindow.h"
+
 
 using namespace std;
 int vid_number = 0;
@@ -161,7 +163,13 @@ int main(int argc, char *argv[]) {
     player->setContent(&buttons, & videos);
 
     // create the main window and layout
+<<<<<<< HEAD
     QWidget *window = new QWidget();
+=======
+    MainWindow w(player);
+    QWidget& window = *w.centralWidget();
+
+>>>>>>> Toolbar_progressbar
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
@@ -176,6 +184,7 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
+<<<<<<< HEAD
     top->addWidget(scroll);
 
     //navigation tabs in the program
@@ -187,10 +196,14 @@ int main(int argc, char *argv[]) {
     fsh->addWidget(new FullscreenButton(&fullScreenHolder, tabs));
     fsh->addWidget(videoWidget);
     fsh->addLayout(controlLayout);
+    fsh->addWidget(w.slider);
+    fsh->addWidget(buttonWidget);
     top->addWidget(buttonWidget);
 
     // showtime!
     tabs->show();
+    top->addWidget(w.slider);
+    top->addWidget(buttonWidget);
 
     // wait for the app to terminate
     return app.exec();

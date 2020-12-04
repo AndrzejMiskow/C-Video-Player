@@ -11,14 +11,19 @@ SOURCES += \
         control_bar.cpp \
         fullscreen_button.cpp \
         new_video_button.cpp \
+        mainwindow.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp
 
 HEADERS += \
+<<<<<<< HEAD
     control_bar.h \
     fullscreen_button.h \
     new_video_button.h \
+=======
+    mainwindow.h \
+>>>>>>> Toolbar_progressbar
     the_button.h \
     the_player.h
 
