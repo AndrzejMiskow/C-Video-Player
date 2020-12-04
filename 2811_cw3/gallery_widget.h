@@ -29,6 +29,8 @@ private:
     QLineEdit* text;
     QPushButton* searchButton;
 
+    QList<int> vidsToDisplay;//contains the indexes of which vids should be placed in buttonDisplay. Currently setup to always hold all vids
+
 public:
     GalleryWidget(ThePlayer* player, QString dirAddress);
 

@@ -42,47 +42,34 @@ GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() 
     while(it.hasNext()){//while there are files that haven't been iterated over
         QString vidAd = it.next();//get address of current file
 
-        if(vidAd.contains(".wmv")){//if it is a video of the correct encoding, this may require modifying to work on mac/linux
-            QString thumbAd = vidAd.left(vidAd.length() - 4) + ".png";//calculate address of thumbnail
-
-            if(QFile(thumbAd).exists()){//check that thumbnail exists
-
-                QImageReader* reader = new QImageReader(thumbAd);//currently a memory leak, investigate if this could be made into a stack variable
-                QImage img = reader->read();
-                if(!img.isNull()){//check that thumbnail is valid image
-                    vids.append(vid_object(new QUrl(QUrl::fromLocalFile(vidAd)), new QIcon(QPixmap::fromImage(img))));//add a new vid_object representing this video to vids
-                } else {
-                    qDebug() << thumbAd << " failed to read";//error message, thumbnail was not valid
-                }
-            } else {
-                qDebug() << "No png found for " << vidAd;//error message, no thumbail exists
-            }
-        }
+        addVid(vidAd);//add this video to the collection
     }
 
     emit reinstance();//setup buttons in default configuration. NOTE: the sizes cannot be known until the tab is chosen, so for now this defaults at the wrong sizes which then fix themselves. This is not ideal
 }
 
 void GalleryWidget::addVid(QString vidAd){//function to add new video to collection, code is repeated in main function. TODO: replace constructor code with calls to this
-    if(vidAd.contains(".wmv")){
-        QString thumbAd = vidAd.left(vidAd.length() - 4) + ".png";
+    if(vidAd.contains(".wmv")){//if it is a video of the correct encoding, this may require modifying to work on mac/linux
+        QString thumbAd = vidAd.left(vidAd.length() - 4) + ".png";//calculate address of thumbnail
 
-        if(QFile(thumbAd).exists()){
+        if(QFile(thumbAd).exists()){//check that thumbnail exists
 
             QImageReader reader(thumbAd);
             QImage img = reader.read();
-            if(!img.isNull()){
+            if(!img.isNull()){//check that thumbnail is valid image
 
-                vid_object newVid(new QUrl(vidAd), new QIcon(QPixmap::fromImage(img)));
+                vid_object newVid(new QUrl(vidAd), new QIcon(QPixmap::fromImage(img)));//add a new vid_object representing this video to vids
                 vids.append(newVid);
+                vidsToDisplay.append(vids.length() - 1);//by default, add this to the videos that should be displayed
             } else {
-                qDebug() << thumbAd << " failed to read";
+                qDebug() << thumbAd << " failed to read";//error message, thumbnail was not valid
             }
         } else {
-            qDebug() << "No png found for " << vidAd;
+            qDebug() << "No png found for " << vidAd;//error message, no thumbail exists
         }
     }
     emit reinstance();
+    //there should be a SIGNAL here to recalculate which videos should be displayed based on the state of the user input objects
 }
 
 void GalleryWidget::replaceButtons(){//this function arranges buttons, currently in no particular order
@@ -96,7 +83,7 @@ void GalleryWidget::replaceButtons(){//this function arranges buttons, currently
     auto hlay = new QHBoxLayout();//first of numberous second level layouts
     vlay->addLayout(hlay);
     int x=0;//keeps track of how many buttons per row there have been
-    for(int a=0; a<vids.length(); a++){//iterate over all videos in collection
+    for(auto a : vidsToDisplay){//iterate over all videos in collection
         auto v = vids[a];
         //qDebug() << "within for, " << x << " : " << *v.mediaLocation;
         if(++x > amountPerRow) {hlay->addStretch(); hlay = new QHBoxLayout(); vlay->addLayout(hlay); x=1;}//if this buttons would be more than allowed per row, create a new row and reset the counter
@@ -105,6 +92,7 @@ void GalleryWidget::replaceButtons(){//this function arranges buttons, currently
 
         connect(but, SIGNAL(clicked()), but, SLOT(createButtonInfo()));//create a temporary TheButtonInfo instance to pass to player when clicked
         connect(but, SIGNAL(changePlayer(TheButtonInfo*)), player, SLOT(jumpTo(TheButtonInfo*)));//pass TheButtonInfo instance to player
+        //connect(but, SIGNAL(clicked()), this->parent(), SLOT(setCurrentIndex(int)));//attempt to change tab when button is pressed, does not work
 
         hlay->addWidget(but);
     }
