@@ -15,6 +15,8 @@
 #include <QLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QComboBox>
+#include <QLineEdit>
 
 class GalleryWidget : public QWidget
 {
@@ -23,12 +25,16 @@ private:
     ThePlayer* player;
     QList<vid_object> vids;
     QWidget* buttonDisplay;
+    QComboBox* sortBox;
+    QLineEdit* text;
+    QPushButton* searchButton;
 
 public:
     GalleryWidget(ThePlayer* player, QString dirAddress);
 
     ~GalleryWidget(){
         delete buttonDisplay;//not strictly necessary, but good practice
+        delete sortBox;
     }
 
     void addVid(QString);

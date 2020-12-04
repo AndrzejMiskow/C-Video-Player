@@ -12,8 +12,16 @@ GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() 
     vids = QList<vid_object>();//create a list of all videos that will be available through this gallery
     buttonDisplay = new QWidget;//create a widget that video icons can be placed in
     {//layout the top level display, places controls at the top and the buttonDisplay below
+        auto topLay = new QHBoxLayout;
+        sortBox = new QComboBox;
+        searchButton = new QPushButton("Search");
+        text = new QLineEdit;
+        topLay->addWidget(text);
+        topLay->addWidget(searchButton);
+        topLay->addWidget(sortBox);
+
         auto lay = new QVBoxLayout;
-        lay->addWidget(new QComboBox());
+        lay->addLayout(topLay);
         lay->addWidget(buttonDisplay);
         setLayout(lay);
     }
@@ -103,4 +111,5 @@ void GalleryWidget::replaceButtons(){//this function arranges buttons, currently
     hlay->addStretch();//adjust spacings to look like a grid
 
     vlay->addStretch();//same as above
+    vlay->setMargin(0);
 }
