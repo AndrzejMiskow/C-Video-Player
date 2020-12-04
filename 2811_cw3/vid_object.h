@@ -18,9 +18,14 @@ public:
     vid_object(QUrl* media, QIcon* png) : mediaLocation(media), icon(png){
         //qDebug() << *mediaLocation << " : " << icon;
     }
-    ~vid_object(){
-        //delete mediaLocation;
-        //delete icon;
+//    vid_object(vid_object &vo){
+//        mediaLocation = vo.mediaLocation;
+//        icon = vo.icon;
+//    }
+    vid_object(){};
+    void copy(vid_object vo){
+        mediaLocation = vo.mediaLocation;
+        icon = vo.icon;
     }
 };
 

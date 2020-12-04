@@ -1,5 +1,6 @@
 #include "gallery_widget.h"
 #include "vid_object.h"
+#include "gallery_button.h"
 #include <QTimer>
 #include <QSize>
 #include <QMetaObject>
@@ -52,7 +53,9 @@ void GalleryWidget::addVid(QString vidAd){
             QImageReader reader(thumbAd);
             QImage img = reader.read();
             if(!img.isNull()){
-                vids.append(vid_object(new QUrl(vidAd), new QIcon(QPixmap::fromImage(img))));
+
+                vid_object newVid(new QUrl(vidAd), new QIcon(QPixmap::fromImage(img)));
+                vids.append(newVid);
             } else {
                 qDebug() << thumbAd << " failed to read";
             }
@@ -73,12 +76,13 @@ void GalleryWidget::replaceButtons(){
     int x=0;
     for(int a=0; a<vids.length(); a++){
         auto v = vids[a];
-        qDebug() << "within for, " << x << " : " << *v.mediaLocation;
+        //qDebug() << "within for, " << x << " : " << *v.mediaLocation;
         if(++x > 3) {hlay = new QHBoxLayout(); vlay->addLayout(hlay); x=0;}
 
-        auto but = new QPushButton(*(v.icon), "");
-        but->setFixedSize(QSize(200, 110));
-        but->setIconSize(QSize(200, 110));
+        auto but = new GalleryButton(QSize(200, 110), QSize(200, 110), *v.icon, v);
+
+        connect(but, SIGNAL(clicked()), but, SLOT(createButtonInfo()));
+        connect(but, SIGNAL(changePlayer(TheButtonInfo*)), player, SLOT(jumpTo(TheButtonInfo*)));
 
         hlay->addWidget(but);
     }

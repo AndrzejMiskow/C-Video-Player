@@ -19,6 +19,7 @@ SOURCES += \
 HEADERS += \
     control_bar.h \
     fullscreen_button.h \
+    gallery_button.h \
     gallery_widget.h \
     new_video_button.h \
     the_button.h \
