@@ -17,13 +17,10 @@ SOURCES += \
         tomeo.cpp
 
 HEADERS += \
-<<<<<<< HEAD
     control_bar.h \
     fullscreen_button.h \
     new_video_button.h \
-=======
     mainwindow.h \
->>>>>>> Toolbar_progressbar
     the_button.h \
     the_player.h
 
