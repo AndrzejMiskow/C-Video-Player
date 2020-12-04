@@ -12,6 +12,7 @@ SOURCES += \
         fullscreen_button.cpp \
         gallery_widget.cpp \
         new_video_button.cpp \
+        mainwindow.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp
@@ -22,6 +23,7 @@ HEADERS += \
     gallery_button.h \
     gallery_widget.h \
     new_video_button.h \
+    mainwindow.h \
     the_button.h \
     the_player.h \
     vid_object.h

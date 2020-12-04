@@ -36,6 +36,8 @@
 #include "fullscreen_button.h"
 #include "gallery_widget.h"
 
+#include "mainwindow.h"
+
 
 using namespace std;
 int vid_number = 0;
@@ -147,7 +149,7 @@ int main(int argc, char *argv[]) {
     //Create a layout for the buttons and playback controls
     QVBoxLayout *controlLayout = new QVBoxLayout();
     controlLayout->addLayout(playbackLayout);
-//    controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
+    //controlLayout->addWidget(buttonWidget);//code moved to line 172 to prevent buttons from maxising with controls
 
     // create the buttons for the number of videos in the folder
     for ( int i = 0; i < (int)videos.size(); i++ ) {
@@ -162,13 +164,16 @@ int main(int argc, char *argv[]) {
     player->setContent(&buttons, & videos);
 
     // create the main window and layout
-    QWidget *window = new QWidget();
+    //QWidget *window = new QWidget();
+    MainWindow w(player);
+    QWidget& window = *w.centralWidget();
+
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
-    window->setLayout(top);
-    window->setWindowTitle("tomeo");
-    window->setMinimumSize(800, 680);
+    window.setLayout(top);
+    window.setWindowTitle("tomeo");
+    window.setMinimumSize(800, 680);
 
     //Code for fullscreen button, widgets in layout fsh will be made fullscreen
     QWidget fullScreenHolder;
@@ -178,12 +183,13 @@ int main(int argc, char *argv[]) {
 
     // add the video and the buttons to the top level widget
     //top->addWidget(videoWidget);//Not sure what this does, commenting it out does not appear to affect the program, and it should be redundant because of line 189.EDIT: qobjects can only exist in one place at once, so this command is replaced almost instantly by line 189.
+
     top->addWidget(scroll);
 
     auto Gallery = new GalleryWidget(player, argv[1]);
 
     //navigation tabs in the program
-    tabs->addTab(window,"Video Player");
+    tabs->addTab(&window,"Video Player");
     tabs->addTab(Gallery, "Gallery");
 
     top->addWidget(new NewVideoButton(argv[1], player, Gallery));
@@ -191,10 +197,15 @@ int main(int argc, char *argv[]) {
     fsh->addWidget(new FullscreenButton(&fullScreenHolder, tabs));
     fsh->addWidget(videoWidget);
     fsh->addLayout(controlLayout);
+    fsh->addWidget(w.slider);
+
     top->addWidget(buttonWidget);
+
+    fsh->addWidget(w.slider);
 
     // showtime!
     tabs->show();
+
 
     // wait for the app to terminate
     return app.exec();
