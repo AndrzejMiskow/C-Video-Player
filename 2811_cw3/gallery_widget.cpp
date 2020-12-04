@@ -63,6 +63,7 @@ void GalleryWidget::addVid(QString vidAd){
             qDebug() << "No png found for " << vidAd;
         }
     }
+    emit reinstance();
 }
 
 void GalleryWidget::replaceButtons(){
@@ -87,4 +88,3 @@ void GalleryWidget::replaceButtons(){
         hlay->addWidget(but);
     }
 }
-

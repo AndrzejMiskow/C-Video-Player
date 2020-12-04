@@ -180,11 +180,13 @@ int main(int argc, char *argv[]) {
     //top->addWidget(videoWidget);//Not sure what this does, commenting it out does not appear to affect the program, and it should be redundant because of line 189.EDIT: qobjects can only exist in one place at once, so this command is replaced almost instantly by line 189.
     top->addWidget(scroll);
 
+    auto Gallery = new GalleryWidget(player, argv[1]);
+
     //navigation tabs in the program
     tabs->addTab(window,"Video Player");
-    tabs->addTab(new GalleryWidget(player, argv[1]), "Gallery");
+    tabs->addTab(Gallery, "Gallery");
 
-    top->addWidget(new NewVideoButton(argv[1], player));
+    top->addWidget(new NewVideoButton(argv[1], player, Gallery));
     top->addWidget(&fullScreenHolder);
     fsh->addWidget(new FullscreenButton(&fullScreenHolder, tabs));
     fsh->addWidget(videoWidget);

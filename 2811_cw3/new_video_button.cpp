@@ -73,5 +73,6 @@ void NewVideoButton::getImageFromFrame(QVideoFrame frame){
         TheButtonInfo but(ur, ico);//create a new buttoninfo representing the new video
 
         vidWindow->newContent(but);//add that buttoninfo to those already in the player
+        gallery->addVid(video_directory + "\\" + videoName + ".wmv");
     }
 }

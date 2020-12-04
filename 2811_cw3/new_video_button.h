@@ -12,6 +12,7 @@
 #include <QVideoProbe>
 #include <QVideoWidget>
 #include "the_player.h"
+#include "gallery_widget.h"
 
 class NewVideoButton : public QPushButton {
     Q_OBJECT
@@ -19,6 +20,7 @@ private:
     QFileDialog *file;//host OS default filer finder
     QString video_directory;//Location of where the video folder is, taken from the arguments
     ThePlayer* vidWindow;
+    GalleryWidget* gallery;
 
     bool currentVidFrameSaved = false;//Read only the first frame, otherwise videoprobe reads many frames
     QString videoName;//extracts name of video from address
@@ -31,7 +33,7 @@ private:
     QVideoProbe* probe;//extracts frame information
 
 public:
-    NewVideoButton(std::string video_location, ThePlayer* vid) : QPushButton(tr("Add new video")) {
+    NewVideoButton(std::string video_location, ThePlayer* vid, GalleryWidget* galleryToAddTo) : QPushButton(tr("Add new video")), gallery(galleryToAddTo) {
         video_directory = QString::fromStdString(video_location);
         vidWindow = vid;
 
