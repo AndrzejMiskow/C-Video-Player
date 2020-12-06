@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
 
     top->addWidget(new NewVideoButton(argv[1], player));
     top->addWidget(&fullScreenHolder);
-    fsh->addWidget(new FullscreenButton(&fullScreenHolder, tabs));
+    fsh->addWidget(new FullscreenButton(&fullScreenHolder));
     fsh->addWidget(videoWidget);
     fsh->addLayout(controlLayout);
     fsh->addWidget(w.slider);
