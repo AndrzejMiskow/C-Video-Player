@@ -166,14 +166,16 @@ int main(int argc, char *argv[]) {
     // create the main window and layout
     //QWidget *window = new QWidget();
     MainWindow w(player);
-    QWidget& window = *w.centralWidget();
+    QWidget* window = new QWidget;
 
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
-    window.setLayout(top);
-    window.setWindowTitle("tomeo");
-    window.setMinimumSize(800, 680);
+    window->setLayout(top);
+    window->setWindowTitle("tomeo");
+    window->setMinimumSize(800, 680);
+
+    w.setCentralWidget(tabs);
 
     //Code for fullscreen button, widgets in layout fsh will be made fullscreen
     QWidget fullScreenHolder;
@@ -189,12 +191,12 @@ int main(int argc, char *argv[]) {
     auto Gallery = new GalleryWidget(player, argv[1]);
 
     //navigation tabs in the program
-    tabs->addTab(&window,"Video Player");
+    tabs->addTab(window,"Video Player");
     tabs->addTab(Gallery, "Gallery");
 
     top->addWidget(new NewVideoButton(argv[1], player, Gallery));
     top->addWidget(&fullScreenHolder);
-    fsh->addWidget(new FullscreenButton(&fullScreenHolder, tabs));
+    fsh->addWidget(new FullscreenButton(&fullScreenHolder));
     fsh->addWidget(videoWidget);
     fsh->addLayout(controlLayout);
     fsh->addWidget(w.slider);
@@ -204,8 +206,9 @@ int main(int argc, char *argv[]) {
     fsh->addWidget(w.slider);
 
     // showtime!
-    tabs->show();
+    //tabs->show();
 
+    w.show();
 
     // wait for the app to terminate
     return app.exec();

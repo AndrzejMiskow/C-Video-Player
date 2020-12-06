@@ -11,15 +11,14 @@ class FullscreenButton : public QPushButton
     Q_OBJECT
 private:
     QWidget* parentWindow;
-    QTabWidget* tabWidget;
     std::map<QWidget*, bool> previousState;
+
 
     void hideHierarchy(QWidget*, QWidget*);
     void showHierarchy(QWidget*, QWidget*);
 public:
-    FullscreenButton(QWidget* window, QTabWidget* tabContainer) : QPushButton(tr("Fullscreen")){
+    FullscreenButton(QWidget* window) : QPushButton(tr("Fullscreen")){
         parentWindow = window;
-        tabWidget = tabContainer;
         connect(this, SIGNAL(clicked()), this, SLOT(switchScreenState()));//set button to switchstates when clicked
     }
 

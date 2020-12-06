@@ -4,7 +4,7 @@
 #include <QTabBar>
 
 void FullscreenButton::hideHierarchy(QWidget* start, QWidget* end){
-    if(start->parentWidget() != end){
+    if(start != end){
         for(QObject* a : start->parentWidget()->children()){
             auto b = dynamic_cast<QWidget*>(a);
             if(b != 0)
@@ -20,7 +20,7 @@ void FullscreenButton::hideHierarchy(QWidget* start, QWidget* end){
 }
 
 void FullscreenButton::showHierarchy(QWidget* start, QWidget* end){
-    if(start->parentWidget() != end){
+    if(start != end){
         for(QObject* a : start->parentWidget()->children()){
             auto b = dynamic_cast<QWidget*>(a);
             if(b != 0)
@@ -34,17 +34,15 @@ void FullscreenButton::showHierarchy(QWidget* start, QWidget* end){
 
 
 void FullscreenButton::switchScreenState(){
-    if(!tabWidget->isFullScreen()){//check if already fullscreen
-        hideHierarchy(parentWindow, tabWidget);
+    if(!QWidget::window()->isFullScreen()){//check if already fullscreen
+        hideHierarchy(parentWindow, QWidget::window());
 
-        tabWidget->tabBar()->hide();
-        QTimer::singleShot(0, tabWidget, SLOT(showFullScreen()));//Set widget to fullscreen
+        QTimer::singleShot(0, QWidget::window(), SLOT(showFullScreen()));//Set widget to fullscreen
     } else {
-        showHierarchy(parentWindow, tabWidget);
+        showHierarchy(parentWindow, QWidget::window());
         previousState.clear();
 
-        tabWidget->tabBar()->show();
-        QTimer::singleShot(0, tabWidget, SLOT(showNormal()));//return widget to normal size
+        QTimer::singleShot(0, QWidget::window(), SLOT(showNormal()));//return widget to normal size
     }
 }
 
