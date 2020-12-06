@@ -28,7 +28,7 @@ void NewVideoButton::openFileDialog(){
         std::ifstream in;//instantiate in and out objects
         std::ofstream out;
         in.open(remainingUrls.takeFirst().toStdString(), std::ios::in | std::ios::binary);//read from the file pointed at by user, read bytes as is
-        out.open((video_directory + "\\" + videoName + ".wmv").toStdString(), std::ios::out | std::ios::binary);//create new file at video folder, write bytes directly
+        out.open((video_directory + "/" + videoName + ".wmv").toStdString(), std::ios::out | std::ios::binary);//create new file at video folder, write bytes directly
 
         out << in.rdbuf();//this basically copies the file
 
@@ -60,7 +60,7 @@ void NewVideoButton::getImageFromFrame(QVideoFrame frame){
 
         a = a.mirrored();//flip image, otherwise they are upside down. I believe this is an artefact of the videowindow having no width or height
 
-        a.save(video_directory + "\\" + videoName + ".png");//save the image to the videodirectory, name is the same as video except with a png extention
+        a.save(video_directory + "/" + videoName + ".png");//save the image to the videodirectory, name is the same as video except with a png extention
 
         QTimer::singleShot(0, player, &QMediaPlayer::stop);//call a slot on the mediaplayer to stop playback. This does not work if the function, stop(), is accessed directly for unclear reasons, see below comment
 
@@ -73,6 +73,6 @@ void NewVideoButton::getImageFromFrame(QVideoFrame frame){
         TheButtonInfo but(ur, ico);//create a new buttoninfo representing the new video
 
         vidWindow->newContent(but);//add that buttoninfo to those already in the player
-        gallery->addVid(video_directory + "\\" + videoName + ".wmv");
+        gallery->addVid(video_directory + "/" + videoName + ".wmv");
     }
 }

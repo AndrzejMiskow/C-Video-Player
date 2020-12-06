@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QStack>
 #include <QToolButton>
+#include <QLabel>
 
 GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() {
     this->player = player;//keep track of which player this gallery is connected to
@@ -15,10 +16,9 @@ GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() 
     {//layout the top level display, places controls at the top and the buttonDisplay below
         auto topLay = new QHBoxLayout;
         sortBox = new QComboBox;
-        searchButton = new QPushButton("Search");
         text = new QLineEdit;
+        topLay->addWidget(new QLabel("Search:"));
         topLay->addWidget(text);
-        topLay->addWidget(searchButton);
         topLay->addWidget(sortBox);
 
         auto lay = new QVBoxLayout;
@@ -27,6 +27,7 @@ GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() 
         setLayout(lay);
     }
 
+    connect(text, SIGNAL(textChanged(QString)), this, SLOT(changeDisplayedVideos(QString)));//when search text changes, update displayed videos
     connect(this, SIGNAL(reinstance()), this, SLOT(replaceButtons()));//emit reinstance(); will now cause the buttons to rerender.
 
     {//this code block causes the buttons to reload every half a second, this allows them to resize according to screen.
@@ -61,7 +62,6 @@ void GalleryWidget::addVid(QString vidAd){//function to add new video to collect
 
                 vid_object newVid(new QUrl(vidAd), new QIcon(QPixmap::fromImage(img)));//add a new vid_object representing this video to vids
                 vids.append(newVid);
-                vidsToDisplay.append(vids.length() - 1);//by default, add this to the videos that should be displayed
             } else {
                 qDebug() << thumbAd << " failed to read";//error message, thumbnail was not valid
             }
@@ -69,6 +69,9 @@ void GalleryWidget::addVid(QString vidAd){//function to add new video to collect
             qDebug() << "No png found for " << vidAd;//error message, no thumbail exists
         }
     }
+
+    allVideosDisplayable();//add all videos to display list
+
     emit reinstance();
     //there should be a SIGNAL here to recalculate which videos should be displayed based on the state of the user input objects
 }
@@ -101,4 +104,25 @@ void GalleryWidget::replaceButtons(){//this function arranges buttons, currently
 
     vlay->addStretch();//same as above
     vlay->setMargin(0);
+}
+
+void GalleryWidget::changeDisplayedVideos(QString str){
+    allVideosDisplayable();
+
+    //code for sorting here, or possibly in allVideosDisplayable()
+
+    int a=-1;
+    while(++a < vidsToDisplay.length()){
+        if(!vids[vidsToDisplay[a]].mediaLocation->fileName().contains(str)){
+            vidsToDisplay.removeAt(a--);
+        }
+        //qDebug() << vids[vidsToDisplay[a]].mediaLocation->fileName();
+    }
+}
+
+void GalleryWidget::allVideosDisplayable(){
+    vidsToDisplay.clear();
+    for(int a=0; a<vids.length(); a++){
+        vidsToDisplay.append(a);
+    }
 }

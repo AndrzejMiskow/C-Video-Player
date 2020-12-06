@@ -27,10 +27,10 @@ private:
     QWidget* buttonDisplay;
     QComboBox* sortBox;
     QLineEdit* text;
-    QPushButton* searchButton;
 
     QList<int> vidsToDisplay;//contains the indexes of which vids should be placed in buttonDisplay. Currently setup to always hold all vids
 
+    void allVideosDisplayable();
 public:
     GalleryWidget(ThePlayer* player, QString dirAddress);
 
@@ -42,6 +42,7 @@ public:
     void addVid(QString);
 public slots:
     void replaceButtons();
+    void changeDisplayedVideos(QString);
 
 signals:
     void reinstance();
