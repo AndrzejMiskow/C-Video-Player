@@ -165,14 +165,16 @@ int main(int argc, char *argv[]) {
     // create the main window and layout
     //QWidget *window = new QWidget();
     MainWindow w(player);
-    QWidget& window = *w.centralWidget();
+    QWidget* window = new QWidget;
 
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
-    window.setLayout(top);
-    window.setWindowTitle("tomeo");
-    window.setMinimumSize(800, 680);
+    window->setLayout(top);
+    window->setWindowTitle("tomeo");
+    window->setMinimumSize(800, 680);
+
+    w.setCentralWidget(tabs);
 
     QWidget fullScreenHolder;
     QVBoxLayout *fsh = new QVBoxLayout();
@@ -184,7 +186,7 @@ int main(int argc, char *argv[]) {
     top->addWidget(scroll);
 
     //navigation tabs in the program
-    tabs->addTab(&window,"Video Player");
+    tabs->addTab(window,"Video Player");
     tabs->addTab(new QWidget(),"Gallery");
 
     top->addWidget(new NewVideoButton(argv[1], player));
@@ -199,8 +201,9 @@ int main(int argc, char *argv[]) {
     fsh->addWidget(w.slider);
 
     // showtime!
-    tabs->show();
+    //tabs->show();
 
+    w.show();
 
     // wait for the app to terminate
     return app.exec();
