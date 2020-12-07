@@ -1,0 +1,42 @@
+Changes made
+
+
+1.To stop the video from looping after ending 
+
+
+the_player.cpp
+
+
+
+
+void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
+    switch (ms) {
+        case QMediaPlayer::State::StoppedState:
+            pause(); // starting playing again...
+            emit(stateChanged(this->state())); //emit a signal so the play/pause button knows
+            break;
+    default:
+        break;
+    }
+}
+
+void ThePlayer::jumpTo (TheButtonInfo* button) {
+    setMedia( * button -> url);
+    pause();
+    emit(stateChanged(this->state()));
+}
+
+
+
+
+2.Stop Gallery thumbnail from randomly flipping 
+
+Removed shuffle() constructor in the_player.h 
+Removed shuffle() method in the_player.cpp
+
+
+ 
+
+ Extra note
+-Failed for timebar as couldn’t be seen on my Mac but needed to be implemented with QProgressBar and QStateMedia Function to get the total length of the media playing 
+
