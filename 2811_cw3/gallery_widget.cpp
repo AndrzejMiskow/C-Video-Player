@@ -118,6 +118,8 @@ void GalleryWidget::changeDisplayedVideos(QString str){
         }
         //qDebug() << vids[vidsToDisplay[a]].mediaLocation->fileName();
     }
+
+    emit reinstance();
 }
 
 void GalleryWidget::allVideosDisplayable(){
