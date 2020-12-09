@@ -8,15 +8,20 @@
 #include <QStack>
 #include <QToolButton>
 #include <QLabel>
+#include <QPainter>
 
 GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() {
     this->player = player;//keep track of which player this gallery is connected to
     vids = QList<vid_object>();//create a list of all videos that will be available through this gallery
     buttonDisplay = new QWidget;//create a widget that video icons can be placed in
+    buttonDisplay->setObjectName(tr("gallery_container"));
+
     {//layout the top level display, places controls at the top and the buttonDisplay below
         auto topLay = new QHBoxLayout;
         sortBox = new QComboBox;
+        sortBox->setObjectName("sort_box");
         text = new QLineEdit;
+        text->setObjectName(tr("gallery_search"));
         topLay->addWidget(new QLabel("Search:"));
         topLay->addWidget(text);
         topLay->addWidget(sortBox);
@@ -127,4 +132,11 @@ void GalleryWidget::allVideosDisplayable(){
     for(int a=0; a<vids.length(); a++){
         vidsToDisplay.append(a);
     }
+}
+
+void GalleryWidget::paintEvent(QPaintEvent*){
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }

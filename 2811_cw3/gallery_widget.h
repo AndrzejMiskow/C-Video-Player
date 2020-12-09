@@ -40,6 +40,7 @@ public:
     }
 
     void addVid(QString);
+    void paintEvent(QPaintEvent*);
 public slots:
     void replaceButtons();
     void changeDisplayedVideos(QString);

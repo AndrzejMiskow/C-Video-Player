@@ -1,9 +1,40 @@
 QToolButton#gallery_button {
-	background-color: red;
+	background-color: #1e1e1e;
 	border-style: outset;
+	color: #ffffff
 }
 QToolButton#gallery_button:pressed {
-	background-color: rgb(244, 0, 0);
+	background-color: #007acc;
 	border-style: inset;
 }
-
+QWidget#gallery_container {
+	background-color: #d4d4d4;
+}
+QLineEdit#gallery_search {
+	background-color: #d4d4d4;
+}
+QComboBox#sort_box {
+	background-color: #d4d4d4;
+}
+GalleryWidget {
+	background-color: #d4d4d4;
+}
+QTabBar::tab:selected {
+	background-color: #cccccc;
+}
+QTabBar::tab:!selected {
+	background-color: #252526;
+	color: #ffffff;
+}
+MainWindow#main_window {
+	background-color: #d4d4d4;
+}
+QMenu {
+	background-color: #d4d4d4;
+}
+QMenu:selected {
+	background-color: #1e1e1e;
+}
+QMenuBar {
+	background-color: #d4d4d4;
+}

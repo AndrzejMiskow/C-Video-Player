@@ -174,6 +174,7 @@ int main(int argc, char *argv[]) {
     // create the main window and layout
     //QWidget *window = new QWidget();
     MainWindow w(player);
+    w.setObjectName("main_window");
     QWidget* window = new QWidget;
 
     QVBoxLayout *top = new QVBoxLayout();
