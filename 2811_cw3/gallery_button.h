@@ -26,7 +26,7 @@ public:
         this->setMinimumSize(200,110);
         vo.copy(voc);//placing this in the definition causes errors, I don't know why. Still works here though
 
-        //this->setStyleSheet("QToolButton { background-color: red }");
+        this->setObjectName(tr("gallery_button"));
     }
 signals:
     void changePlayer(TheButtonInfo*);

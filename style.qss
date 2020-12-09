@@ -1,4 +1,9 @@
-QToolButton {
+QToolButton#gallery_button {
 	background-color: red;
+	border-style: outset;
+}
+QToolButton#gallery_button:pressed {
+	background-color: rgb(244, 0, 0);
+	border-style: inset;
 }
 
