@@ -37,6 +37,7 @@
 #include "gallery_widget.h"
 
 #include "mainwindow.h"
+#include <QFile>
 
 
 using namespace std;
@@ -89,6 +90,13 @@ int main(int argc, char *argv[]) {
 
     // create the Qt Application
     QApplication app(argc, argv);
+
+    {
+        QFile file("../style.qss");
+        file.open(QFile::ReadOnly);
+        QString sheet = QLatin1String(file.readAll());
+        app.setStyleSheet(sheet);
+    }
 
     // collect all the videos in the folder
     vector<TheButtonInfo> videos;

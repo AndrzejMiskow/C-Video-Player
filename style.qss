@@ -1,0 +1,4 @@
+QToolButton {
+	background-color: red;
+}
+
