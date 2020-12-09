@@ -130,6 +130,7 @@ int main(int argc, char *argv[]) {
     ThePlayer *player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
+
     QScrollArea *scroll = new QScrollArea;
     // the ControlBar used to control playback settings
     ControlBar *controls = new ControlBar(0,player);
@@ -148,11 +149,13 @@ int main(int argc, char *argv[]) {
     // the buttons are arranged horizontally
     QHBoxLayout *layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
+    buttonWidget->setObjectName("mainWindow");
 
-    //scroll area for the
+    //scroll area for the thumbnails
     scroll->setWidget(buttonWidget);
     scroll->setWidgetResizable(true);
-    scroll->setMinimumHeight(160);
+    scroll->setMinimumHeight(180);
+    scroll->setObjectName("volume");
 
     //Create a layout for the buttons and playback controls
     QVBoxLayout *controlLayout = new QVBoxLayout();
@@ -164,6 +167,8 @@ int main(int argc, char *argv[]) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
+        button->setObjectName("thumbnail");
+        button->setMinimumSize(QSize(220,140));
         layout->addWidget(button);
         button->init(&videos.at(i));
     }
@@ -175,13 +180,14 @@ int main(int argc, char *argv[]) {
     //QWidget *window = new QWidget();
     MainWindow w(player);
     QWidget* window = new QWidget;
+    window->setObjectName("mainWindow");
 
     QVBoxLayout *top = new QVBoxLayout();
     QTabWidget *tabs = new QTabWidget();
 
     window->setLayout(top);
     window->setWindowTitle("tomeo");
-    window->setMinimumSize(800, 680);
+    window->setMinimumSize(1920, 1080);
 
     w.setCentralWidget(tabs);
 

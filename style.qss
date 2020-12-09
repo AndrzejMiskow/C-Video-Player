@@ -1,4 +1,152 @@
-QToolButton {
-	background-color: red;
+QToolButton#name1 {
+	background-color: #007acc;
+	border-radius: 4px;
+
 }
 
+QToolButton#muteBtn {
+	background-color: #007acc;
+	border-radius: 4px;
+}
+
+QWidget#mainWindow
+{
+	background-color: #1e1e1e;
+}
+
+QScrollArea {
+    background: #1e1e1e;
+}
+
+QScrollBar:horizontal {
+    border: 2px solid grey;
+    background: #1e1e1e;
+    height: 15px;
+    margin: 0px 20px 0 20px;
+}
+QScrollBar::handle:horizontal {
+    background: 007acc;
+    min-width: 40px;
+}
+QScrollBar::add-line:horizontal {
+    border: 2px solid grey;
+    background: #007acc;
+    width: 20px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    border: 2px solid grey;
+    background: #007acc;
+    width: 20px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+
+
+QSlider#videoLength::groove:horizontal {
+	border: 1px solid #bbb;
+	background: soild-gray;
+	height: 10px;
+	border-radius: 4px;
+}
+
+QSlider#videoLength::sub-page:horizontal {
+	background: #007acc;
+	border: 1px solid #777;
+	height: 10px;
+	border-radius: 4px;
+}
+
+QSlider#videoLength::add-page:horizontal {
+	background: #fff;
+	border: 1px solid #777;
+	height: 10px;
+	border-radius: 4px;
+}
+
+QSlider#videoLength::handle:horizontal {
+	background: soild-gray;
+	border: 1px solid #777;
+	width: 30px;
+	margin-top: -2px;
+	margin-bottom: -2px;
+	border-radius: 4px;
+}
+
+QSlider#videoLength::handle:horizontal:hover {
+	background: white;
+	border: 1px solid #444;
+	border-radius: 4px;
+}
+
+
+
+TheButton#thumbnail{
+	background: #252526;
+	border-radius: 2px;
+}
+
+TheButton#thumbnail::hover{
+	background: #007acc;
+}
+
+
+
+FullscreenButton{
+	background: #007acc;
+	height: 30px;
+	border-radius: 4px;
+}
+
+FullscreenButton::hover{
+	background: #d4d4d4;
+	height: 30px;
+	border-radius: 4px;
+}
+
+
+
+NewVideoButton{
+	background: #007acc;
+	height: 30px;
+	border-radius: 4px;
+}
+
+NewVideoButton::hover{
+	background: #d4d4d4;
+	height: 30px;
+	border-radius: 4px;
+}
+
+
+
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+    position: absolute;
+    top: -0.5em;
+}
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+QTabBar::tab {
+    background: #007acc;
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 60ex;
+	min-height: 10ex;
+    padding: 2px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+	background: #d4d4d4;
+}
+
+QTabBar::tab:selected {
+    border-color: #9B9B9B;
+    border-bottom-color: #C2C7CB;
+}

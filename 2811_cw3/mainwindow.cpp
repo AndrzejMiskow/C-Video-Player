@@ -99,6 +99,7 @@ MainWindow :: MainWindow( QMediaPlayer *player ) :
     //initial setup for the main window : slider
     ui -> setupUi( this );
     slider = new QSlider( Qt::Horizontal );
+    slider->setObjectName("videoLength");
     slider -> setMinimum( 0 );
 
     initConnect();

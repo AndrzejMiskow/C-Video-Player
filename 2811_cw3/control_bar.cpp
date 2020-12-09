@@ -6,6 +6,8 @@
 #include <QToolButton>
 #include <QComboBox>
 #include <QMediaPlayer>
+#include <QScrollBar>
+
 
 ControlBar::ControlBar(QWidget *parent, QMediaPlayer *player) : QWidget(parent)
 {
@@ -13,27 +15,28 @@ ControlBar::ControlBar(QWidget *parent, QMediaPlayer *player) : QWidget(parent)
     //QToolButton allows for the use of icons
     playButton = new QToolButton(this);
     playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    playButton->setObjectName(tr("name1"));
+    playButton->setMinimumSize(QSize(60,40));
+
 
     muteButton = new QToolButton(this);
+    muteButton->setObjectName(tr("muteBtn"));
     muteButton->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
+    muteButton->setMinimumSize(QSize(60,40));
 
-    volumeSlider = new QSlider(Qt::Horizontal, this);
+    volumeSlider = new QScrollBar(Qt::Horizontal, this);
     volumeSlider->setRange(0, 100);
+    volumeSlider->setMinimumSize(QSize(600,40));
+    volumeSlider->setObjectName("volume");
 
     //Create a spinbox with various speed options
     //The "playbackrate" is a qreal
-    speedBox = new QComboBox(this);
-    speedBox->addItem("0.5x", qreal(0.5));
-    speedBox->addItem("1.0x", qreal(1.0));
-    speedBox->addItem("1.5x", qreal(1.5));
-    speedBox->addItem("2.0x", qreal(2.0));
-    speedBox->setCurrentIndex(1);
+
 
     //Connect internal signals and slots - generally updating displayed values
     connect(playButton, SIGNAL(clicked()), this, SLOT(playClicked()));
     connect(muteButton, SIGNAL(clicked()), this, SLOT(muteClicked()));
     connect(volumeSlider, SIGNAL(sliderMoved(int)), this, SIGNAL(changeVolume(int)));
-    connect(speedBox, SIGNAL(activated(int)), this, SLOT(updateSpeed()));
 
     //Connect controller signals and player slots - these actually control playback
     connect(this, SIGNAL(play()), player, SLOT(play()));
@@ -51,7 +54,6 @@ ControlBar::ControlBar(QWidget *parent, QMediaPlayer *player) : QWidget(parent)
     layout->addWidget(playButton);
     layout->addWidget(volumeSlider);
     layout->addWidget(muteButton);
-    layout->addWidget(speedBox);
     setLayout(layout);
 }
 
@@ -87,9 +89,9 @@ void ControlBar::setMute(bool muted)
     playerMuted = muted;
 
     if(muted)
-        muteButton->setIcon(style()->standardIcon(QStyle::SP_MediaVolumeMuted));
+        muteButton->setIcon(QIcon(":/muted.png"));
     else
-        muteButton->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
+        muteButton->setIcon(QIcon(":/Sound.png"));
 }
 
 void ControlBar::setState(QMediaPlayer::State state)

@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QSlider>
 #include <QComboBox>
+#include <QScrollBar>
 
 class ControlBar : public QWidget
 {
@@ -24,7 +25,7 @@ private:
     //Buttons, combobox and slider to adjust settings
     QToolButton *playButton;
     QToolButton *muteButton;
-    QSlider *volumeSlider;
+    QScrollBar *volumeSlider;
     QComboBox *speedBox;
 
 signals:
