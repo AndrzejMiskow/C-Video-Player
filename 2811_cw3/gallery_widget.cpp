@@ -22,7 +22,9 @@ GalleryWidget::GalleryWidget(ThePlayer* player, QString dirAddress) : QWidget() 
         sortBox->setObjectName("sort_box");
         text = new QLineEdit;
         text->setObjectName(tr("gallery_search"));
-        topLay->addWidget(new QLabel("Search:"));
+        auto searchText = new QLabel("Search:");
+        searchText->setObjectName("search_text_gallery");
+        topLay->addWidget(searchText);
         topLay->addWidget(text);
         topLay->addWidget(sortBox);
 
